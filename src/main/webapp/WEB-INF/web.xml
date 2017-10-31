@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	metadata-complete="false">
+  <display-name>aplore</display-name>
+  	<filter>
+		<filter-name>guiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>guiceFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>jersey-servlet</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>co.nz.aplore.resource.application.AploreApplication</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>jersey-servlet</servlet-name>
+		<url-pattern>/restws/*</url-pattern>
+	</servlet-mapping>
+
+	<listener>
+		<listener-class>com.silvermindsoftware.sg.context.GuiceContextListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>Guice.Modules</param-name>
+		<param-value>
+			co.nz.aplore.web.guice.module.WebModule
+		</param-value>
+	</context-param>
+
+	<filter>
+		<description>Stripes filter</description>
+		<display-name>Stripes Filter</display-name>
+		<filter-name>StripesFilter</filter-name>
+		<filter-class>net.sourceforge.stripes.controller.StripesFilter</filter-class>
+		<init-param>
+			<param-name>Configuration.Class</param-name>
+			<param-value>com.silvermindsoftware.sg.config.GuiceRuntimeConfiguration</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ActionBeanContextFactory.Class</param-name>
+			<param-value>com.silvermindsoftware.sg.controller.GuiceActionBeanContextFactory</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ActionResolver.Class</param-name>
+			<param-value>com.silvermindsoftware.sg.controller.GuiceActionResolver</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ActionResolver.Packages</param-name>
+			<param-value>co.nz.aplore.action</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Interceptor.Classes</param-name>
+			<param-value>co.nz.aplore.interceptor.LoggedInInterceptor</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>StripesFilter</filter-name>
+		<servlet-name>StripesDispatcher</servlet-name>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>StripesDispatcher</servlet-name>
+		<servlet-class>net.sourceforge.stripes.controller.DispatcherServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>StripesDispatcher</servlet-name>
+		<url-pattern>*.action</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>Index.action</welcome-file>
+	</welcome-file-list>
+</web-app>

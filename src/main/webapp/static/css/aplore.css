@@ -1,0 +1,47 @@
+/* Login page */
+#aplore-login-panel {
+	margin-top: 200px;
+}
+
+#aplore-menu {
+	margin-top: 30px;
+}
+
+#aplore-logo {
+	height: 60px;
+	width: 60px;
+}
+
+#logo-container #aplore-logo-dashboard {
+	height: 60px;
+	width: 60px;
+	margin-top: 0;
+}
+
+.rest-uri {
+	color: #000000;
+	font-weight: bold;
+}
+
+.soap-method {
+	color: #000000;
+	font-weight: bold;
+}
+
+.clinical-event-class {
+	color: #000000;
+	font-weight: bold;
+}
+
+#list-products a {
+	color: white;
+}
+
+#list-products span {
+	color: #000000;
+}
+
+#product-search-results a {
+	font-size: 200%;
+	color: #bd5151;
+}
